@@ -17,7 +17,7 @@ boolean read_until_ESP(const char keyword1[], int key_size, int timeout_val, byt
             //timing control
             while(!Serial2.available()){//wait until a new byte is sent down from the ESP - good way to keep in lock-step with the serial port
               if((millis()-timeout_start_val)>timeout_val){//if nothing happens within the timeout period, get out of here
-                Serial2.println("timeout");
+                Serial.println("timeout");
                 return 0;//this will end the function
               }//timeout
             }// while !avail
@@ -55,7 +55,7 @@ boolean read_until_ESP(const char keyword1[], int key_size, int timeout_val, byt
            //timing control
             while(!Serial2.available()){// same thing as done in the buffer
               if((millis()-timeout_start_val)>timeout_val){
-                Serial2.println("timeout");
+                Serial.println("timeout");
                 return 0;
               }//timeout
             }// while !avail

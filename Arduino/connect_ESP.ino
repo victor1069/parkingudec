@@ -1,7 +1,7 @@
 boolean connect_ESP(){//returns 1 if successful or 0 if not
 
   Serial.println("CONNECTING");
-  Serial2.print("AT+CIPSTART=0,\"TCP\",\"www.parkingudec.site88.net\",80\r\n");//connect to your web server
+  Serial2.print("AT+CIPSTART=0,\"TCP\",\"parkingudec.site88.net\",80\r\n");//connect to your web server
   //read_until_ESP(keyword,size of the keyword,timeout in ms, data save 0-no 1-yes 'more on this later') 
   if(read_until_ESP(keyword_OK,sizeof(keyword_OK),5000,0)){//go look for 'OK' and come back
   serial_dump_ESP();//get rid of whatever else is coming
@@ -14,7 +14,7 @@ boolean connect_ESP(){//returns 1 if successful or 0 if not
   if(read_until_ESP(keyword_carrot,sizeof(keyword_carrot),5000,0)){//go wait for the '>' character, ESP ready for the payload
     Serial.println("READY TO SEND");
     for(int i=0; i<payload_size; i++)//print the payload to the ESP
-    Serial.print(payload[i]);
+    Serial2.print(payload[i]);
     
     if(read_until_ESP(keyword_sendok,sizeof(keyword_sendok),5000,0)){//go wait for 'SEND OK'
     Serial.println("SENT");//yay, it was sent

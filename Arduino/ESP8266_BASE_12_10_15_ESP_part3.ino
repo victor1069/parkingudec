@@ -1,3 +1,5 @@
+
+//V1
 #include <SoftwareSerial.h>
 //#define _SS_MAX_RX_BUFF 256 
 #define ESP8266_rxPin 17
@@ -10,12 +12,12 @@ const char SSID_ESP[] = "Mozrock";
 const char SSID_KEY[] = "Mozrock3133387605";
 
 // URLs
-String URL_webhost = "GET http://www.parkingudec.site88.net/from_micro.php?unit=";
+String URL_webhost = "GET http://parkingudec.site88.net/from_micro.php?unit=";
 //MODES
 const char CWMODE = '1';//CWMODE 1=STATION, 2=APMODE, 3=BOTH
 const char CIPMUX = '1';//CWMODE 0=Single Connection, 1=Multiple Connections
 
-SoftwareSerial ESP8266(ESP8266_rxPin, ESP8266_txPin);// rx tx
+//SoftwareSerial ESP8266(ESP8266_rxPin, ESP8266_txPin);// rx tx
 
 //DEFINE ALL FUNCTIONS HERE
 boolean setup_ESP();
@@ -62,26 +64,30 @@ const char keyword_doublehash[] = "##";
 
 
 void setup(){//        SETUP     START
+
+  Serial2.begin(9600);
+     Serial.begin(115200);
+     
   //Pin Modes for ESP TX/RX
   pinMode(ESP8266_rxPin, INPUT);
   pinMode(ESP8266_txPin, OUTPUT);
   
-  ESP8266.begin(9600);//default baudrate for ESP
-  ESP8266.listen();//not needed unless using other software serial instances
-  Serial2.begin(9600);
-     Serial.begin(115200);
+   //ESP8266.begin(9600);//default baudrate for ESP
+  // ESP8266.listen();//not needed unless using other software serial instances
+ 
   
- // delay(5000);//delay before kicking things off
- setup_ESP();//go setup the ESP 
+  //delay(5000);//delay before kicking things off
+  //setup_ESP();//go setup the ESP 
 }//                    SETUP     END
 
 void loop(){//         LOOP     START
+
   while ( Serial2.available())
    Serial.write(Serial2.read()); 
 
      while ( Serial.available())
    Serial2.write(Serial.read()); 
-    
+   
   sensor_value = analogRead(0);
   connect_webhost();
   analogWrite(3, LED_value);

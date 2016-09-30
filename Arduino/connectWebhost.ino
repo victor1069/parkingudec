@@ -23,34 +23,34 @@ URL_withPacket += payload_closer;
   //first up, we need to parse the returned data  _t1123##_d15##_d210##
 
   
-    if(read_until_ESP(keyword_t1,sizeof(keyword_t1),5000,0)){//go find t1 then stop
-      if(read_until_ESP(keyword_doublehash,sizeof(keyword_doublehash),5000,1)){//our data is next, so change mode to '1' and stop at ##
+    if(read_until_ESP(keyword_t1,sizeof(keyword_t1),10000,0)){//go find t1 then stop
+      if(read_until_ESP(keyword_doublehash,sizeof(keyword_doublehash),20000,1)){//our data is next, so change mode to '1' and stop at ##
         //got our data, so quickly store it away in d1
         for(int i=1; i<=(scratch_data_from_ESP[0]-sizeof(keyword_doublehash)+1); i++)//go see 'setup' and how this was done with the ip address for more info
         t1_from_ESP[i] = scratch_data_from_ESP[i];
         t1_from_ESP[0] = (scratch_data_from_ESP[0]-sizeof(keyword_doublehash)+1);
     
         //we still have more data to get out of this stream, now we want d1
-        if(read_until_ESP(keyword_d1,sizeof(keyword_d1),5000,0)){//same as before - first d1
-          if(read_until_ESP(keyword_doublehash,sizeof(keyword_doublehash),5000,1)){//now ## and mode=1
+        if(read_until_ESP(keyword_d1,sizeof(keyword_d1),10000,0)){//same as before - first d1
+          if(read_until_ESP(keyword_doublehash,sizeof(keyword_doublehash),20000,1)){//now ## and mode=1
             for(int i=1; i<=(scratch_data_from_ESP[0]-sizeof(keyword_doublehash)+1); i++)
               d1_from_ESP[i] = scratch_data_from_ESP[i];
              d1_from_ESP[0] = (scratch_data_from_ESP[0]-sizeof(keyword_doublehash)+1); 
 
-        if(read_until_ESP(keyword_d2,sizeof(keyword_d2),5000,0)){//same as before - first d2
-          if(read_until_ESP(keyword_doublehash,sizeof(keyword_doublehash),5000,1)){//now ## and mode=1
+        if(read_until_ESP(keyword_d2,sizeof(keyword_d2),10000,0)){//same as before - first d2
+          if(read_until_ESP(keyword_doublehash,sizeof(keyword_doublehash),20000,1)){//now ## and mode=1
             for(int i=1; i<=(scratch_data_from_ESP[0]-sizeof(keyword_doublehash)+1); i++)
               d2_from_ESP[i] = scratch_data_from_ESP[i];
               d2_from_ESP[0] = (scratch_data_from_ESP[0]-sizeof(keyword_doublehash)+1);            
       
             //now that we have our data, go wait for the connection to disconnect - the ESP will eventually return 'Unlink'
-            if(read_until_ESP(keyword_linkdisc,sizeof(keyword_linkdisc),5000,0)){
+            if(read_until_ESP(keyword_linkdisc,sizeof(keyword_linkdisc),20000,0)){
               // delay(10);
               Serial.println("FOUND DATA & DISCONNECTED");
               serial_dump_ESP();//now we can clear out the buffer and read whatever is still there
               //let's see how the data looks
               
-               Serial2.print("Time ");
+               Serial.print("Time ");
                if(t1_from_ESP[0] > 3){
                Serial2.print(t1_from_ESP[1]);
                Serial2.print(t1_from_ESP[2]);
@@ -64,7 +64,7 @@ URL_withPacket += payload_closer;
                Serial2.print(t1_from_ESP[2]);
                Serial2.print(t1_from_ESP[3]);  
                }
-               Serial2.print(" LED = ");//print out LED data and convert to integer
+               Serial.print(" LED = ");//print out LED data and convert to integer
                LED_value = 0;
                for(int i=1; i<=d1_from_ESP[0]; i++){
                //Serial.print(d1_from_ESP[i]);
@@ -72,7 +72,7 @@ URL_withPacket += payload_closer;
                }
                Serial2.print(LED_value);
                
-               Serial2.print(" SENSOR = ");//print out Sensor data and convert to integer
+               Serial.print(" SENSOR = ");//print out Sensor data and convert to integer
                sensor_readBack = 0;
                for(int i=1; i<=d2_from_ESP[0]; i++){
                //Serial.print(d2_from_ESP[i]);
