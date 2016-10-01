@@ -1,5 +1,5 @@
 boolean connect_ESP(){//returns 1 if successful or 0 if not
-
+  Serial.print("\r\n");
   Serial.println("CONNECTING");
   Serial2.print("AT+CIPSTART=0,\"TCP\",\"parkingudec.site88.net\",80\r\n");//connect to your web server
   //read_until_ESP(keyword,size of the keyword,timeout in ms, data save 0-no 1-yes 'more on this later') 
