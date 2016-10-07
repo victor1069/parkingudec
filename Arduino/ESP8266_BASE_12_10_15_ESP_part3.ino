@@ -12,7 +12,7 @@ const char SSID_ESP[] = "Mozrock";
 const char SSID_KEY[] = "Mozrock3133387605";
 
 // URLs
-String URL_webhost = "GET http://parkingudec.site88.net/from_micro.php?unit=";
+String URL_webhost = "GET http://parking-udec.audiplantas.com//from_micro.php?unit=";
 //MODES
 const char CWMODE = '1';//CWMODE 1=STATION, 2=APMODE, 3=BOTH
 const char CIPMUX = '1';//CWMODE 0=Single Connection, 1=Multiple Connections
@@ -29,9 +29,9 @@ boolean connect_ESP();
 void connect_webhost();
 
 //DEFINE ALL GLOBAL VAARIABLES HERE
-int unit_id = 1;
+int unit_id = 3;
 int sensor_value = 123;
-int sensor_readBack = 0;
+int sensor_readBack = 0;                  
 unsigned long timeout_start_val;
 char scratch_data_from_ESP[20];//first byte is the length of bytes
 char payload[150];
@@ -90,7 +90,7 @@ void loop(){//         LOOP     START
    
   sensor_value = analogRead(0);
   connect_webhost();
-  analogWrite(3, LED_value);
+  analogWrite(6, LED_value);
   delay(5000);//5 seconds between tries
 
 }//                    LOOP     END
