@@ -1,4 +1,4 @@
-
+ 
 //V1
 #include <SoftwareSerial.h>
 //#define _SS_MAX_RX_BUFF 256 
@@ -65,7 +65,7 @@ const char keyword_doublehash[] = "##";
 
 void setup(){//        SETUP     START
 
-  Serial2.begin(9600);
+  Serial2.begin(115200);
      Serial.begin(115200);
      
   //Pin Modes for ESP TX/RX
